@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>v-for 迴圈</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="images/favicon.ico" rel="shortcut icon">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/all.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/regular.js" integrity="sha384-t7yHmUlwFrLxHXNLstawVRBMeSLcXTbQ5hsd0ifzwGtN7ZF7RZ8ppM7Ldinuoiif" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>    <script src="/javascripts/vendor.js"></script>
+
+  </head>
+  
+  <body class="bg-lighter">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="/">Vue.js 練習手冊</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/basic/dev.html">基礎教學</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/template/basic.html">模板指令</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/components/basic.html">組件</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/api/vue_set.html">常用 API</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/es6/let_const.html">ES6</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+    <div class="container my-5">
+      <div class="row">
+        
+          <div class="col-md-3">
+            
+<div>
+  <h6 class="text-capitalize text-muted">template</h6>
+  
+    
+      <a href="/template/basic.html"  class="btn btn-block btn-link">
+        基礎模板語法
+      </a>
+    
+  
+    
+      <a href="/template/v_class.html"  class="btn btn-block btn-link">
+        切換樣式
+      </a>
+    
+  
+    
+      <a href="/template/v_if.html"  class="btn btn-block btn-link">
+        v-if 模板判斷
+      </a>
+    
+  
+    
+      <a href="/template/v_for.html"  class="btn btn-block btn-primary active">
+        v-for 迴圈
+      </a>
+    
+  
+    
+      <a href="/template/computed_watch.html"  class="btn btn-block btn-link">
+        計算及監聽
+      </a>
+    
+  
+    
+      <a href="/template/form.html"  class="btn btn-block btn-link">
+        表單補充介紹
+      </a>
+    
+  
+    
+      <a href="/template/v_on.html"  class="btn btn-block btn-link">
+        v-on 事件綁定
+      </a>
+    
+  
+    
+      <a href="/template/homework_sortby.html"  class="btn btn-block btn-link">
+        作業練習：表格排序
+      </a>
+    
+  
+</div>
+          </div>
+        
+        <div class="col-md-9 post">      
+          <!-- 練習開始 -->
+          <h1 class="mt-0 text-muted">v-for 迴圈</h1>
+          
+<div class="alert alert-secondary">
+  <ol class="mb-0">
+    <li>請跟隨課程完成此章節。</li>
+  </ol>
+</div>
+<!-- Vue 的畫面切換是部分置換，它並不會直接把 DOM 元素全改。如果有 input 這類的 DOM 元素就無法置換 -->
+<div id="app">
+  <h4>陣列與物件的迴圈</h4>
+  <p>請使用 v-for 在陣列與物件上，並且加上索引</p>
+  <ul>
+    <li v-for="(item, key) in objectData">
+      {{ key }} - {{ item.name }} {{ item.age }} 歲
+    </li>
+  </ul>
+  <ul>
+
+  </ul>
+  <hr>
+  <!-- https://cn.vuejs.org/v2/guide/list.html#%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81   【官方對 v-for 不會切換 input 的解釋】-->
+  <!-- https://cn.vuejs.org/v2/api/#key  【官方對 key 的解釋】 -->
+
+  <h4>Key</h4>
+  <p>請在範例上補上 key，並觀察其差異</p>
+  <ul>
+    <!-- v-for 默認使用 "就地更新" 策略。如果數據項的順序被改變，Vue 將不會移動 DOM 元素來匹配數據項的順序，而是就地更新每個元素。(所以 input 的輸入不會被改變)-->
+    <!-- 使用 key 時，會基於 key 的變化重新排列元素順序，並且會移除 key 不存在的元素 >> 可以解決 DOM 元素不會被更改順序的問題 -->
+
+    <!-- 增加 :key 以後，便可以順利切換。:key 需要具有唯一性，因此要綁定在 arrayData 陣列、各個 item 屬性中、值不重複的那個屬性 (在此 name, age 都可用) -->
+    <li v-for="(item, key) in arrayData" :key="item.age">
+      {{ key }} - {{ item.name }} {{ item.age }} 歲 <input type="text">
+    </li>
+  </ul>
+  <!-- 先在 input 輸入數字。當執行下面這段，可以看到 input 內部的數字並沒有被切換。-->
+  <!-- <button class="btn btn-outline-primary" @click="reverseArray">反轉陣列</button> -->
+  <button class="btn btn-outline-primary" @click="reverseArray">反轉陣列</button>
+
+  <h4>Filter</h4>
+  <p>請製作過濾資料</p>
+  <input type="text" class="form-control" v-model="filterText" @keyup.enter="filterData">
+  <ul>
+    <!-- 把 arrayData 換成 filterArray -->
+    <li v-for="(item, key) in filterArray" :key="item.age">
+      {{ key }} - {{ item.name }} {{ item.age }} 歲 <input type="text">
+    </li>
+  </ul>
+
+  <h4>不能運作的狀況</h4>
+  <p>講師說明</p>
+  <button class="btn btn-outline-primary" @click="cantWork">無法運行</button>
+  <ul>
+    <li v-for="(item, key) in arrayData" :key="item.age">
+      {{ key }} - {{ item.name }} {{ item.age }} 歲 <input type="text">
+    </li>
+  </ul>
+
+  <h4>純數字的迴圈</h4>
+  <ul>
+    <li v-for="item in 10">
+      {{ item }}
+    </li>
+  </ul>
+
+  <h4>Template 的運用</h4>
+  <p>請將兩個 tr 一組使用 v-for</p>
+  <table class="table">
+    <!-- 可以看到畫面呈現了 <tr>，而 <template> 標籤並不會被輸出 -->
+    <template v-for="item in arrayData">
+      <tr>
+        <td>{{item.age}}</td>
+      </tr>
+      <tr>
+        <td>{{item.name}}</td>
+      </tr>
+    </template>
+  </table>
+
+  <h4>v-for 與 v-if</h4>
+  <!-- 如果 v-for 與 v-if 被寫在同一個元素上，它會先執行 v-for, 在去執行 v-if -->
+  <p>請加上 v-if 判斷式</p>
+  <ul>
+    <li v-for="(item, key) in arrayData" v-if="item.age <= 20">
+      {{ key }} - {{ item.name }} {{ item.age }} 歲
+    </li>
+  </ul>
+
+  <h4>v-for 與 元件</h4>
+  <p>講師說明</p>
+  <ul>
+    <!-- :key 也可以直接寫在元件上 -->
+    <list-item :item="item" v-for="(item, key) in arrayData" :key="item.age"></list-item>
+  </ul>
+  <p>注意：現在建議元件使用 v-for 都加上 key。<a href="https://cn.vuejs.org/v2/guide/list.html#%E4%B8%80%E4%B8%AA%E7%BB%84%E4%BB%B6%E7%9A%84-v-for">參考</a></p>
+</div>
+
+<script>
+Vue.component('list-item', {
+  template: `
+    <li>
+      {{ item.name }} {{ item.age }} 歲
+    </li>
+  `,
+  props: ['item']
+});
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    // 陣列跟物件都可以使用 v-for，陣列的索引是數字。
+    arrayData: [
+      {
+        name: '小明',
+        age: 16
+      },
+      {
+        name: '漂亮阿姨',
+        age: 24
+      },
+      {
+        name: '杰倫',
+        age: 20
+      }
+    ],
+    //物件的索引是屬性。
+    objectData: {
+      ming: {
+        name: '小明',
+        age: 16
+      },
+      auntie: {
+        name: '漂亮阿姨',
+        age: 24
+      },
+      jay: {
+        name: '杰倫',
+        age: 20
+      }
+    },
+    filterArray: [],
+    filterText: ''
+  },
+  methods: {
+    // 請在此練習 JavaScript
+
+    // 解答：
+    reverseArray: function () {
+      this.arrayData.reverse();
+      console.log(this.arrayData);
+    },
+    filterData: function () {
+      //因為 this 在之後會被替換掉，所以這邊先用 vm 存起來 (這裡指向 Vue 應用程式)
+      var vm = this;
+      //會把 return 的值推到 filterArray 內
+      vm.filterArray = vm.arrayData.filter(function (item) {
+        //match 指定 name 符合的陣列
+        console.log(vm.filterText, item.name, item.name.match(vm.filterText));
+        //判斷式變成 true, 因此 filter 會回傳當下這個 item
+        return item.name.match(vm.filterText);
+      });
+    },
+    cantWork: function () {
+      // // 情境一
+      // 在 JS 中如果把陣列的 length 設定為 0，JS 會把它的內容清除; 但在 Vue 中這樣是會有問題的，不要這樣運用。
+      // 打開 console 可以看到，雖然 arrayData 顯示已被清除，但是 HTML 畫面並沒有變化
+      this.arrayData.length = 0;
+      console.log(this.arrayData);
+
+      // // 情境二
+      //在 Vue 如果直接指派，是無法運作的。打開 console 一樣可以看到內容被修改，畫面沒有變動
+      this.arrayData[0] = {
+        name: '阿強',
+        age: 99
+      }
+
+      
+      // 解法: 用 Vue.set()   
+      // https://cn.vuejs.org/v2/api/#Vue-set 【官方】
+
+      // Vue.set(this.arrayData, 0, {
+      //   name: '阿強',
+      //   age: 99
+      // })
+      // console.log(this.arrayData)
+    }
+  }
+});
+</script>
+
+<!-- 解答：
+<h4>陣列與物件的迴圈</h4>
+<ul>
+  <li v-for="(item, key) in arrayData">
+    {{ key }} - {{ item.name }} {{ item.age }} 歲
+  </li>
+</ul>
+<ul>
+  <li v-for="(item, key, index) in objectData">
+    {{ index }} {{ key }} - {{ item.name }} {{ item.age }} 歲
+  </li>
+</ul>
+<hr>
+<h4>Key</h4>
+<ul>
+  <li v-for="(item, key) in arrayData" :key="item.age">
+    {{ key }} - {{ item.name }} {{ item.age }} 歲 <input type="text">
+  </li>
+</ul>
+<button @click="reverseArray" class="btn btn-outline-primary">反轉陣列</button>
+
+<h4>Filter</h4>
+<input type="text" class="form-control" v-model="filterText" @keyup.enter="filterData">
+<ul>
+  <li v-for="(item, key) in filterArray" :key="item.age">
+    {{ key }} - {{ item.name }} {{ item.age }} 歲 <input type="text">
+  </li>
+</ul>
+
+<h4>不能運作的狀況</h4>
+<button @click="cantWork" class="btn btn-outline-primary">無法運行</button>
+<ul>
+  <li v-for="(item, key) in arrayData" :key="item.age">
+    {{ key }} - {{ item.name }} {{ item.age }} 歲 <input type="text">
+  </li>
+</ul>
+
+<h4>純數字的迴圈</h4>
+<ul>
+  <li v-for="item in 10">
+    {{ item }}
+  </li>
+</ul>
+
+<h4>Template 的運用</h4>
+<table class="table">
+  <template v-for="(item, key) in arrayData">
+    <tr>
+      <td rowspan="2">{{ key }}</td>
+      <td>{{ item.name }}</td>
+    </tr>
+    <tr>
+      <td>{{ item.age }}</td>
+    </tr>
+  </template>
+</table>
+
+<h4>v-for 與 v-if</h4>
+<ul>
+  <li v-for="(item, key) in arrayData" v-if="item.age <= 20">
+    {{ key }} - {{ item.name }} {{ item.age }} 歲
+  </li>
+</ul>
+
+<h4>v-for 與 元件</h4>
+<ul>
+  <list-item :item="item" v-for="(item, key) in arrayData" :key="item.age"></list-item>
+</ul>
+<p>注意：現在建議元件使用 v-for 都加上 key。<a href="https://cn.vuejs.org/v2/guide/list.html#%E4%B8%80%E4%B8%AA%E7%BB%84%E4%BB%B6%E7%9A%84-v-for">參考</a></p>
+
+--> 
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
