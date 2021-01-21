@@ -153,6 +153,9 @@
     <span v-else>Show child</span>
   </button>
   <hr>
+
+  <!-- 這堂很難在程式碼作筆記，請搭配影片 -->
+  <!-- 嘗試把 keep-alive 註解，看一下運行的差異 -->
   <keep-alive>
     <app-child v-if="isShowing"></app-child>
   </keep-alive>
