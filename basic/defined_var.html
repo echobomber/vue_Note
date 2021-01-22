@@ -155,8 +155,11 @@
 <script>
 var app = new Vue({
   el: '#app',
+  // data 的資料一定要先定義，這超重要
+  // 如果未預先定義，開發者工具不一定會報錯，所以會找不到 bug
   data: {
     text: '',
+    // 如果把 newText 註解，reverseText() 並不會依照物件的特性，自動新增一個 newText 
     newText: ''
   },
   methods: {

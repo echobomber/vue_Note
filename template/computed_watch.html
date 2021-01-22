@@ -119,6 +119,7 @@ watch: 用來監控特定變數，當變數產生變化的時候，可以執行�
 <div id="app">
   <h4>Computed</h4>
   <p>使用 Computed 來過濾資料。</p>
+  <!-- 當 computed 偵測到綁定的資料變動，就會執行 -->
   <input type="text" class="form-control" v-model="filterText">
   <ul>
     <li v-for="(item, key) in filterArray" :key="item.age">

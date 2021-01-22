@@ -148,18 +148,19 @@
 
 
 <div class="app">
-{{text}}
+  {{text}}
 </div>
+<!-- 如果有兩個一樣的，它會綁定第一個 class -->
 <div class="app">
   {{text}}
-  </div>
+</div>
 
 
 <script>
 var app = new Vue({
   el: '.app',
   data: {
-    text: '這裡是一段話'
+    text: '自定義練習'
   }
   
 })

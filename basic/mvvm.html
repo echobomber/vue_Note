@@ -147,19 +147,31 @@
 </div>
 
 
-<div id="app">
-  <input type="text">
+<div id="app" style="margin-bottom: 10px;">
+  <label for="test" v-text="title">這行字體會被 v-text 覆蓋</label>
+  <input type="text" v-model="message" id="test">
 </div>
 
-<script>
-var app = new Vue({
-  el: '#app',
-  // 在此建立資料內容
 
-  // data: {
-  //   message: '哈囉'
-  // }
+
+
+<script>
+let app = new Vue({
+  el: "#app",
+  data: {
+    message: "哈囉",
+    title: '覆蓋文字'
+  }
 })
+
+// var app = new Vue({
+//   el: '#app',
+//   // 在此建立資料內容
+
+//   // data: {
+//   //   message: '哈囉'
+//   // }
+// })
 </script> 
         </div>
       </div>

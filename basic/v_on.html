@@ -147,6 +147,7 @@
 
 <div id="app">
   <input type="text" class="form-control" v-model="text">
+  <!-- 點擊後執行 reverseText -->
   <button class="btn btn-primary mt-1" v-on:click="reverseText">反轉字串</button>
   <div class="mt-3">
     {{ newText }}
@@ -163,6 +164,7 @@ var app = new Vue({
   // 請在此撰寫 JavaScript
   methods: {
     reverseText() {
+      // this 指向 Vue 實例 (Var app); text 即 data.text
       console.log(this.text);
       this.newText = this.text.split('').reverse().join('');
       // console.log(this);

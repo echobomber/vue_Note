@@ -121,7 +121,7 @@
   <!-- v-model="selected2" 會將 option 的 value 傳入 -->
   <select name="" id="" class="form-control" v-model="selected2">
     <option disabled value="">請選擇</option>
-    <!-- 透過 v-for 填入 option，記得 value 要用 v-bind -->
+    <!-- 透過 v-for 填入 option，value 用 v-bind 單向綁定為 item-->
     <option :value="item" v-for="item in selectData">{{ item }}</option>
   </select>
   <p>小明喜歡的女生是 {{ selected2 }}。</p>
@@ -138,6 +138,7 @@
   <h4 class="mt-3">複選框</h4>
   <div class="form-check">
     <!-- 加入 true-value="男生" false-value="女生" -->
+    <!-- 沒有加的話，按下 checkbox 會是 true/false 在切換 -->
     <input type="checkbox" class="form-check-input" id="sex" v-model="sex" true-value="男生" false-value="女生">
     <label class="form-check-label" for="sex">{{ sex }}</label>
   </div>

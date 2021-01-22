@@ -137,7 +137,7 @@
         <div class="col-md-9 post">      
           <!-- 練習開始 -->
           <h1 class="mt-0 text-muted">模板語法的延伸 v-if 及 v-for</h1>
-          
+          <!-- v-for 陣列、物件都可以用 -->
 <div class="alert alert-secondary">
   <ol class="mb-0">
     <li>使用 v-for 來呈現資料列表</li>
@@ -147,15 +147,16 @@
 
 <!-- 陣列渲染 -->
 <ul id="app">
+  <!-- v-for 很像 forEach，而 index 即為陣列索引 -->
   <li v-for="(item, index) in list">
-    {{index}} {{item.name}} 今年 {{item.age}} 歲
+    索引: {{index}} -> {{item.name}} 今年 {{item.age}} 歲
   </li>
 </ul>
 <hr>
 <!-- 物件渲染 -->
 <ul id="app2">
   <li v-for="(item, key, index) in objectData">
-    鍵值: {{key}}, 索引: {{index}}, item.name: {{item.name}}, item.age: {{item.age}} 
+    鍵值: {{key}}， 索引: {{index}} -> item.name: {{item.name}}， item.age: {{item.age}} 
   </li>
 </ul>
 <script>

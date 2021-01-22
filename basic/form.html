@@ -146,18 +146,23 @@
 
 <div id="app">
   <h4>字串</h4>
+  <!-- v-model -->
   {{ text }}
   <input type="text" class="form-control" v-model="text">
   <hr>
+  <!-- v-model -->
   <pre>{{ textarea }}</pre>
   <textarea cols="30" rows="3" class="form-control" v-model="textarea"></textarea>
   <hr>
+  <!-- 如果 checkbox 的 v-model 綁定的 data (在此是 checkbox1) 不是陣列，它會忽略 value 內的值，只會有 true/false 的切換-->
+  <!-- 如果不想要顯示 true/false，可以加入 true-value="值" false-value="值" -->
   <h4>Checkbox 與 Radio</h4>
   <div class="form-check">
     <input type="checkbox" class="form-check-input" id="check1" v-model="checkbox1">
     <label class="form-check-label" for="check1" v-text="checkbox1"></label>
   </div>
   <hr>
+  <!-- 如果 checkbox 的 v-model 綁定的 data (在此是 checkboxArray) 是陣列，它會把 value 內的值加入 data-->
   <div class="form-check">
     <input type="checkbox" class="form-check-input" id="check2" value="雞" v-model="checkboxArray">
     <label class="form-check-label" for="check2">雞</label>
@@ -172,6 +177,7 @@
   </div>
   <p>晚餐火鍋裡有 <span v-for="item in checkboxArray">{{item}}</span>。</p>
   <hr>
+  <!--  -->
   <div class="form-check">
     <input type="radio" class="form-check-input" id="radio2" value="雞" v-model="singleRadio">
     <label class="form-check-label" for="radio2">雞</label>
@@ -186,6 +192,7 @@
   </div>
   <p>晚餐火鍋裡有{{singleRadio}}。</p>
   <hr>
+  <!-- Select 的 v-model 規則是會根據選到的 option 之 value 更改 data -->
   <h4>Select</h4>
   <select name="" id="" class="form-control" v-model="selected">
     <option disabled value="">請選擇</option>

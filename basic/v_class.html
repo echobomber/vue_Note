@@ -145,7 +145,8 @@
 </div>
 
 <div id="app">
-  <div class="box" :class="{'rotate' :  isTransform}"></div>
+  <!-- {'class名稱': 判斷式}，當判斷式為 true， 則新增 class (不會覆蓋原有的 class)-->
+  <div class="box" :class="{'rotate': isTransform}"></div>
   <hr>
   <button class="btn btn-outline-primary" @click="isTransform = !isTransform">選轉物件</button>
 </div>

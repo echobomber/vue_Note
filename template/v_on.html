@@ -181,7 +181,8 @@
   </ul>
   <h6 class="mt-3">滑鼠修飾符</h6>
   <div class="p-3 bg-primary">
-    <span class="box" @click.left="trigger('Left button')">
+    <!-- 打開 console 記得檢查 device toolbar 有沒有切換成電腦畫面。如果是手機畫面會檢測不到部分操作 ex: .dblclick, .right -->
+    <span class="box" @click.right="trigger('Right button')">
     </span>
   </div>
 </div>

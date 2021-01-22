@@ -159,6 +159,8 @@ Vue.component('counter-component', {
       counter: 0
     }
   },
+  // 這邊應該跟 <template> 作用一樣。
+  // <template> 不會被渲染至 HTML，只會渲染裡面的內容。
   template: `
     <div>
       你已經點擊 <button class="btn btn-outline-secondary btn-sm" @click="counter += 1">{{ counter }}</button> 下。

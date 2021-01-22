@@ -1,0 +1,27 @@
+{
+  "name": "vue_note",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/echobomber/vue_Note.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/echobomber/vue_Note/issues"
+  },
+  "homepage": "https://github.com/echobomber/vue_Note#readme",
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-vue": "^7.5.0"
+  }
+}
