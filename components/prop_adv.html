@@ -124,11 +124,15 @@
   <h2>單向數據流</h2>
   <photo :img-url="url"></photo>
   <p>修正單向數據流所造成的錯誤</p>
-
+  <!-- js 物件傳參考特性: card 的資料是從外部 (Root) 傳入的，基於傳參考特性，修改 card 的資料會同步修改 Root 的資料 (修改 email 試看看)-->
   <h2 class="mt-3">物件傳參考特性 及 尚未宣告的變數</h2>
   <div class="row">
     <div class="col-sm-4">
-      <card :user-data="user"></card>
+      <!-- 
+        card 元件的內容是由 ajax 傳入的，因為撈資料會有時間差，導致 card 不會出現。
+        加入 v-if="user.phone" (ajax 撈回來的其中一筆資料，可以換其他的) 讓元件在資料撈完以後才同步顯示
+      -->
+      <card :user-data="user" v-if="user.phone"></card>
     </div>
   </div>
 
@@ -138,9 +142,19 @@
     <label class="form-check-label" for="isShow">Check me out</label>
   </div>
   <div class="row">
-    <div class="col-sm-4" v-if="isShow">
+    <!-- <div class="col-sm-4" v-if="isShow">
       <keep-card>
       </keep-card>
+    </div> -->
+    <div class="col-sm-4">
+      <!-- 
+        1. 使用 keep-alive 避免每次點選「Check me out」都會重新執行一次 AJAX。加入後不管怎麼點擊，圖片都是一樣的。
+        2. 加入後打開 console，可以發現點擊只會讓 <KeepCard> 切換成 inactive，表示暫時隱藏，下次啟動不會重新執行生命週期。
+      --> 
+      <keep-alive>
+        <keep-card  v-if="isShow">
+        </keep-card>
+      </keep-alive>
     </div>
   </div>
 </div>
@@ -148,16 +162,22 @@
 <script type="text/x-template" id="photo">
 <div>
   <img :src="imgUrl" class="img-fluid" alt="" />
-  <input type="text" class="form-control" v-model="imgUrl">
+  <!-- v-model 如果綁定 imgUrl，在進行修改的時候會不符合單向數據流 -> Vue 規定不應該修改用 props 傳進來的資料 -->
+  <input type="text" class="form-control" v-model="newUrl">
 </div>
 </script>
 
 
 <script type="text/x-template" id="card">
 <div class="card">
-  <img class="card-img-top" :src="user.picture.large" alt="Card image cap">
+  <!-- 
+    1. 因為 AJAX 還沒跑完， :src="user.picture.large" 會抓不到資料，因此報錯。
+    2. 加入 v-if="user.picture"，確保資料完全載入的時候才會讀出內容。
+   -->
+  <img class="card-img-top" :src="user.picture.large" v-if="user.picture" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">{{ user.name.first }} {{ user.name.last }}</h5>
+    <!-- 加入 v-if="user.name" -->
+    <h5 class="card-title" v-if="user.name">{{ user.name.first }} {{ user.name.last }}</h5>
     <p class="card-text">{{ user.email }}</p>
   </div>
   <div class="card-footer">
@@ -170,6 +190,12 @@
 Vue.component('photo', {
   props: ['imgUrl'],
   template: '#photo',
+  // 將 props 傳遞進來的 imgUrl 用 newUrl 儲存起來，這樣可以維持單向數據流 (不會直接修改到外部資料)
+  data: function(){
+    return{
+      newUrl: this.imgUrl
+    }
+  }
 
   // 解答：
   // data: function () {
@@ -182,6 +208,7 @@ Vue.component('photo', {
 Vue.component('card', {
   props: ['userData'],
   template: '#card',
+  // 以下 data 的資料可以給相對應的 x-template 做使用
   data: function () {
     return {
       user: this.userData
@@ -189,6 +216,7 @@ Vue.component('card', {
   }
 });
 
+// 每次啟動的時候會執行一段 AJAX
 Vue.component('keepCard', {
   template: '#card',
   data: function() {
@@ -211,16 +239,19 @@ Vue.component('keepCard', {
 var app = new Vue({
   el: '#app',
   data: {
+    //預先定義 user，待 AJAX 載入以後再加入資料。
     user: {},
     url: 'https://images.unsplash.com/photo-1522204538344-922f76ecc041?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=50e38600a12d623a878983fc5524423f&auto=format&fit=crop&w=1351&q=80',
     isShow: true 
   },
+  // 基於生命週期的原理，若要操作 AJAX，須於 created Hook 階段後才能使用，但通常到 mounted Hook 階段 (代表資料已掛載成功) 才會被使用。
   created: function() {
     var vm = this;
     $.ajax({
       url: 'https://randomuser.me/api/',
       dataType: 'json',
       success: function(data) {
+        // 加入 user
         vm.user = data.results[0];
       }
     });

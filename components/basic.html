@@ -123,21 +123,49 @@
   </ol>
 </div>
 
+<!-- https://hsuchihting.github.io/vue-js/20200920/2506730221/  【參考】 -->
+
+<!-- 元件內的資料與外層是不同的 -->
 <div id="app">
   <table class="table">
     <thead>
     </thead>
     <tbody>
-      <tr v-for="(item, key) in data" :item="item" :key="key">
+      <!-- 因為 tbody 規定裡面只能放 tr, td，放入元件 row-component 違反了規則，所以要改用 「is」 掛入 tr -->
+      <!-- <row-component v-for="(item, key) in data" :person="item" :key="key"></row-component> -->
+      <tr is="row-component" v-for="(item, key) in data" :person="item" :key="key"></tr>
+
+
+      <!-- <tr v-for="(item, key) in data" :item="item" :key="key">
         <td>{{ item.name }}</td>
         <td>{{ item.cash }}</td>
         <td>{{ item.icash }}</td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
 </div>
 
+<script type="text/x-template" id="rowComponentTemplate">
+  <tr>
+    <td>{{ person.name }}</td>
+    <td>{{ person.cash }}</td>
+    <td>{{ person.icash }}</td>
+  </tr>
+</script>
+
 <script>
+// 這樣寫的話，所有的 Vue 應用程式都可以使用 row-component
+// Vue.component('row-component', {
+//   props: ['person'],
+//   template: '#rowComponentTemplate'
+// })
+
+// 局部註冊寫法
+let child = {
+  props: ['person'],
+  template: '#rowComponentTemplate'
+}
+
 var app = new Vue({
   el: '#app',
   data: {
@@ -163,6 +191,9 @@ var app = new Vue({
         icash: 100,
       },
     ]
+  },
+  components: {
+    "row-component": child
   }
 });
 </script>

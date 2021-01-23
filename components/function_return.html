@@ -132,10 +132,18 @@
 </div>
 </script>
 
+<!-- 元件的 data 必須用 return 的方式 -->
 <script>
 Vue.component('counter-component', {
-  data: {
-    counter: 0
+  // data: {
+  //   counter: 0
+  // },
+  
+  // 以下 data 的資料可以給相對應的 x-template 做使用
+  data: function(){
+    return{
+      counter: 0
+    }
   },
   template: '#counter-component'
 })

@@ -120,11 +120,18 @@
   </ol>
 </div>
 
+<!-- 老師講解: 各個元件的資料狀態是獨立的 (如以下兩個 photo)，包含 <Root> 也是 -->
+<!-- 如果外部資料要往內傳，需要使用 props 屬性 -->
 <div id="app">
   <h2>靜態傳遞</h2>
-  <photo></photo>
+  <!-- 下面的 img-url 等同於  props: ['imgUrl']，這是因為直接寫 imgUrl 是不符合 HTML 規範的-->
+  <!-- 加入以下 img-url (外部) 後，資料會透過 props 傳入 Vue.component 綁定的元件 (內部 -> photo) -->
+  <!-- 打開 console 觀察 <Root> 跟 <photo> 內資料的變化 -->
+  <photo img-url="https://images.unsplash.com/photo-1522204538344-922f76ecc041?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=50e38600a12d623a878983fc5524423f&auto=format&fit=crop&w=1351&q=80"></photo>
+  
+  <!-- v-bind 綁定 data 以動態修改 -->
   <h2>動態傳遞</h2>
-  <photo></photo>
+  <photo :img-url="url"></photo>
 </div>
 
 <script type="text/x-template" id="photo">
@@ -134,9 +141,11 @@
 </div>
 </script>
 
+
 <script>
 Vue.component('photo', {
   // 同學請依據課程內容，自行填寫 Props 的寫法
+  props: ['imgUrl'],
   template: '#photo'
 })
 
