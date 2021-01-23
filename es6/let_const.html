@@ -106,22 +106,32 @@
 <script>
 // #1
 // 修改 var -> let
-var mom = '老媽';
-(function () {
-  console.log(mom);
-})();
+/*
+  let: not defined， 記憶體根本沒有配置空間
+  var: undefined，記憶體有配置空間，值為 undefined
+*/
+// console.log(mom);
+// let mom = '老媽';
+// (function () {
+//   console.log(mom);
+// })();
 
 // #2
 // 修改 var -> let
+/*
+  var 作用域: function scope
+  let 作用域: Block scope
+
+*/ 
 // function varMing () {
-//   var ming = '小明';
+//   let ming = '小明';
 //   if (true) {
-//     var ming = '杰哥';  
+//     let ming = '杰哥';  
 //     // 這裡的 ming 依然是外層的小明，所以小明即將被取代
 //   }
 //   console.log(ming);  // '杰哥'
 // }
-
+// varMing();
 
 // #3
 // 修改 var -> let
@@ -133,17 +143,21 @@ var mom = '老媽';
 // }
 
 // #4
-// const
+// const 不能重新指派變數
 // const ming = '鐵錚錚男子漢';
 
 // #5
-// const 與 物件
-// const family = {
-//   mom: '老媽',
-//   me: '小明',
-//   sister: '小橙'
-// };
-// family.father = '爸爸';
+// const 與 物件 (可以重新指派，因為物件是傳參考，修改只有改到參考內的值)
+const family = {
+  mom: '老媽',
+  me: '小明',
+  sister: '小橙'
+};
+family.father = '爸爸';
+console.log(family);
+// 但是如果直接把參考替換掉，則會報錯，如以下:
+// family = {};
+
 
 // #6
 // 額外問題，不使用 let，上述答案如何解答

@@ -106,45 +106,82 @@
 <script>
 // #1 改寫傳統函式
 // 將以下改寫成 Arrow Function，並嘗試縮寫形式
-var callSomeone = function (someone) {
-  return someone + '吃飯了'
-}
-console.log(callSomeone('小明'))
+// var callSomeone = function (someone) {
+//   return someone + '吃飯了'
+// }
+// console.log(callSomeone('小明'))
 
-// # 沒有 arguments 參數
+// 最常使用
+// var callSomeone = (someone) => {
+//   return someone + '吃飯了'
+// }
+// console.log(callSomeone('小明'))
+
+/* 
+如果只有一行，可以省略: 
+1.參數的() 
+2. {}
+3. return
+*/
+// var callSomeone = someone => someone + '吃飯了';
+// // 如果沒有傳入參數，就不能省略 ()。
+// // var callSomeone = () => '小明' + '吃飯了';
+// console.log(callSomeone('小明'))
+
+
+//
+// var callSomeone = function (someone) {
+//   return someone + '吃飯了'
+// }
+// console.log(callSomeone('小明'))
+
+// # 箭頭函式沒有 arguments 參數，需要使用其餘參數代替
 // 將以下改寫成 Arrow Function，並觀察差異
-// const updateEasyCard = function () {
+// const updateEasyCard = function (...arg) {
 //   let cash = 0;
-//   console.log(arguments); // arguments is not defined
+//   console.log(arg); // arguments is not defined
 // }
 // updateEasyCard(10, 50, 100, 50, 5, 1, 1, 1, 500);
 
 
-// # This 綁定的差異
+// # This 綁定的差異  (傳統 this = 函式的呼叫方式)
+// 因為箭頭函式的 this 所綁定的對象比較複雜，建議在使用 Vue 的時候用傳統函式 -> 縮寫的方法來撰寫
 // var name = '全域阿婆'
 // var auntie = {
 //   name: '漂亮阿姨',
-//   callName: function () { 
-//     console.log('1', this.name); // 1 漂亮阿姨
+//   callName () { 
+//     console.log('1', this.name, this); // 1 漂亮阿姨
+//     // = window.setTimeout
 //     setTimeout(function () {
 //       console.log('2', this.name); // 2 漂亮阿姨
 //       console.log('3', this); // 3 auntie 這個物件
 //     }, 10);
 //   },
+//   // 使用箭頭函式，其 this 所綁定的對象又更複雜了 
+//   callName2: () => { 
+//     console.log('1 arrow', this.name, this); // 1 arrow 全域阿婆 
+//     setTimeout(() => {
+//       console.log('2 arrow', this.name); // 2 arrow 全域阿婆 
+//       console.log('3 arrow', this); 
+//     }, 10);
+//   },
 // }
-// auntie.callName();
+// // auntie.callName();
+// auntie.callName2();
+
 
 // # 善用的方式
 // 請將內層的 console.log 能夠指向 auntie 這個物件
-// var auntie = {
-//   name: '漂亮阿姨',
-//   callName () { 
-//     setTimeout(function () {
-//       console.log(this);
-//     }, 10);
-//   }
-// }
-// auntie.callName();
+var auntie = {
+  name: '漂亮阿姨',
+  callName () {
+    var vm = this;
+    setTimeout(() => {
+      console.log(vm, vm.name);
+    }, 10);
+  }
+}
+auntie.callName();
 </script> 
         </div>
       </div>

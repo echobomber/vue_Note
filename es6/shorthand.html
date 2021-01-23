@@ -106,16 +106,29 @@
 <script>
 // #1 物件縮寫
 // 請將以下兩個合併至一個物件上
-const Frieza = '弗利沙'
-const GinyuTeam = {
-  Ginyu: '基紐',
-  Jeice: '吉斯',
-  burter: '巴特',
-  // ...
-}
+// const Frieza = '弗利沙'
+// const GinyuTeam = {
+//   Ginyu: '基紐',
+//   Jeice: '吉斯',
+//   burter: '巴特',
+//   // ...
+// }
+// 傳統寫法
+// const newTeam = {
+//   GinyuTeam: GinyuTeam,
+//   Frieza: Frieza
+// }
+
+// 縮寫
+// const newTeam = {
+//   GinyuTeam,
+//   Frieza
+// }
+// console.log(newTeam);
 
 
-// #2 案例
+
+// #2 案例   >> 這段無法運行，只是示範
 // 在 Vue.js CLI 常見情境
 // import Vue from 'vue'
 // import App from './App'
@@ -133,26 +146,43 @@ const GinyuTeam = {
 // # 物件函式縮寫
 // 縮寫以下 showPosture Function
 // const newTeam = {
-//   // ...
-//   showPosture: function () {
-//     console.log('我們是 基紐特戰隊')
+//   // 一般寫法
+//   // showPosture: function () {
+//   //   console.log('我們是 基紐特戰隊')
+//   // }
+//   // 縮寫
+//   showPosture() {
+//     console.log('我們是 基紐特戰隊');
 //   }
 // }
 
+
 // # 搭配解構使用
 // 將以下物件指向賦予到另一個物件上，並且避免參考
-// const GinyuTeam = {
-//   Ginyu: {
-//     name: '基紐'
-//   },
-//   Jeice: {
-//     name: '吉斯'
-//   },
-//   burter: { 
-//     name: '巴特'
-//   },
-//   // ...
-// }
+const GinyuTeam = {
+  Ginyu: {
+    name: '基紐'
+  },
+  Jeice: {
+    name: '吉斯'
+  },
+  burter: { 
+    name: '巴特'
+  },
+  // ...
+}
+// 這樣寫會因為物件的傳參考特性，兩個物件都被修改
+// const newTeam = GinyuTeam;
+// newTeam.ming = "小明";
+// console.log(newTeam, GinyuTeam);
+
+const newTeam = {
+  // 使用展開語法，可以把物件內的各個內容都提出來 (而非直接參考)，這樣可以避免「物件內還有物件」的狀況，且修改 newTeam 物件也不會更動到 GinyuTeam
+  ...GinyuTeam
+};
+newTeam.ming = "小明";
+console.log(newTeam, GinyuTeam);
+
 
 </script> 
         </div>

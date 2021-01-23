@@ -112,40 +112,97 @@ const people = [
     money: 500
   },
   {
-    name: '漂亮阿姨',
-    money: 3000
-  },
-  {
     name: '杰倫',
     money: 60000
   },
   {
-    name: '老媽',
-    money: Infinity
-  }
+    name: '漂亮阿姨',
+    money: 3000
+  },
+  // {
+  //   name: '老媽',
+  //   money: Infinity
+  // }
 ];
 
 // forEach 與 map
 // 將所有物件增加 icash 有多少金額的欄位
 
+// 以下的這個方法，把 forEach 換成 map 其結果是一樣的。forEach 不會回傳陣列。
+// people.forEach(function(item, index, array){
+//   item.icash = item.money + 500;
+//   console.log(item);
+// })
 
-// filter
+// map 可以 return 一個「新的」陣列，必須用一個變數儲存。假設沒有寫 return，還是會回傳 4 個 undefined
+// const newPeople =  people.map(function(item, index, array){
+//   // 也可以加上判斷，但是因為 map 就算判斷式為 false，依然會回傳 undefined，因此不適合用來做過濾 (應該用 filter)
+//   if(item.money > 2000){
+//     return {
+//       ...item,
+//       icash: item.money + 500
+//     }
+//   }
+// })
+// console.log(newPeople);
+
+
+// filter -> 會回傳一個陣列
 // 挑出金額少於 5000 的物件
+// const filterPeople =  people.filter(function(item, index){
+//   if(item.money < 5000){
+//     // 只會回傳判斷為 true 的 item
+//     return true;
+//   }
+// })
+// console.log(filterPeople);
 
-// find
+// find -> 跟 filter 很像，但只會回傳一次，適合拿來找單一的值
 // 1. 找到金額 = 500 的物件
 // 2. 找到 > 5000 的物件
 
-// every
+// const findPeople =  people.find(function(item, index){
+//   if(item.money < 5000){
+//     // 只會回傳判斷為 true 的 item
+//     return true;
+//   }
+// })
+// console.log(findPeople);
+
+// every 會回傳 true/false，條件為: 所有 item 都為 true，才會回傳 true。
 // 1. 所有物件是否都超過 10000 元
 // 2. 是否所有物件超過 300 元
+// const ans = people.every(function(item, index){
+//     return item.money > 300;
+// })
+// console.log(ans);
 
-// some
+
+// some 會回傳 true/false，條件為: 只要部分 item 為 true，就會回傳 true。
 // 1. 是否有物件超過 10000 元
 // 2. 是否有物件持有金額少於 300元
+// const ans = people.some(function(item, index){
+//     return item.money > 10000;
+// })
+// console.log(ans);
+
 
 // reduce
-// 去除掉老媽，請問剩下的人有多少錢？
+// 去除掉老媽，請問剩下的人有多少錢？(執行這個範例需要把 people 中的 "老媽" 註解掉)
+// prev 指前一個參數，如果沒有前一個參數，則會傳入 function 後面所設定的數字 (0)
+// 根據前一個的 return 決定 prev 值
+// const newNumber = people.reduce(function(prev, item, index){
+//     console.log(prev);
+//     return prev + item.money;
+// }, 0)
+// console.log(newNumber);
+
+// 也可以用來抓最大值
+const maxNumber = people.reduce(function(prev, item, index){
+    console.log(prev);
+    return Math.max(prev, item.money);
+}, 0)
+console.log('maxNumber:', maxNumber);
 
 </script> 
         </div>

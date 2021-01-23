@@ -102,7 +102,10 @@
   </ol>
 </div>
 
-
+<!-- 
+  參考: https://pjchender.blogspot.com/2017/01/es6-object-destructuring.html 
+  陣列的解構賦值強調的是順序，而物件的解構賦值強調的則是屬性名稱，屬性名稱必須相互對應才能夠取得到值。
+-->
 <script>
 // #1 陣列解構
 // 1. 請將 family 的值，一一賦予到變數上
@@ -112,12 +115,20 @@
 // let jay = family[1];
 // let auntie = family[2];
 
+// 如果參數的數量與陣列不同，排序在後面的陣列元素就不會被加入
+// let [ming, jay, aunt, mom, dad] = family;
+// console.log(ming, jay, aunt, mom, dad);
+
 // #2 請交換以下兩個變數
 // let Goku = '悟空';
 // let Ginyu = '基紐';
+// [Goku, Ginyu] = [Ginyu, Goku];
+// console.log(Goku, Ginyu);
 
 // #3 請拆解以下字元到單一變數上
 // let str = '基紐特攻隊';
+// let [q, a, z, w, s] = str;
+// console.log(q, a, z, w, s);
 
 // #4 物件解構
 // 請取出物件內的兩個值到單一變數上
@@ -125,6 +136,8 @@
 //   ming: '小明',
 //   jay: '杰倫',
 // };
+// let familyAll = { ...family }
+// console.log(familyAll);
 
 // #5
 // 取出其中一個值，並附在新的變數名稱上
@@ -134,7 +147,9 @@
 //   burter: '巴特',
 //   // ...
 // }
-
+// // {屬性名稱: 新變數(選擇加入)}，沒有定義新變數，就會沿用舊的
+// let {Ginyu : jordan} = GinyuTeam;
+// console.log(jordan);
 
 // #6 延伸問題
 // let { ming: Goku, family: [, mom] } = { ming: '小明', family: ['阿姨', '老媽', '老爸'] }
@@ -142,12 +157,17 @@
 
 
 // #7 預設值
-// let [ming = '小明', jay = '杰倫'] = ['阿明'] 
+// let [ming = '小明', jay = '杰倫'] = ['大明'];
+// console.log(ming, jay);
 // 第一個會被賦值，第二個會用預設
-// ming: "阿明"
+// ming: "大明"
 // jay: "杰倫"
 
-// let { family: ming = '小明' } = {}
+
+// let { family: ming = '小明' } = {};
+// let { family: ming = '小明' } = {family:'小華'};
+// console.log(ming);
+
 // ming: '小明'
 </script> 
         </div>

@@ -101,7 +101,7 @@
     <li>請跟隨課程完成此章節。</li>
   </ol>
 </div>
-
+<div id="app"></div>
 
 <script>
 // #1 樣板字串
@@ -120,15 +120,23 @@ const people = [
     friends: 0
   }
 ]
-let originString = '我叫做 ' + people[0].name;
-let originUl = '<ul>\
-  <li>我叫做 ' + people[0].name + '</li>\
-  <li>我叫做 ' + people[1].name + '</li>\
-  <li>我叫做 ' + people[2].name + '</li>\
-</ul>';
+// let originString = '我叫做 ' + people[0].name;
+// let originUl = '<ul>\
+//   <li>我叫做 ' + people[0].name + '</li>\
+//   <li>我叫做 ' + people[1].name + '</li>\
+//   <li>我叫做 ' + people[2].name + '</li>\
+// </ul>';
 
-console.log(originString, originUl);
-
+// 也可以插入 JavaScript 語法
+// 以下用 people.map() 會回傳一個陣列，所以 <li> 之間會有「,」。可以用 join('') 轉成字串，並移除逗號
+let newUl = `
+  <ul>
+    ${people.map(person => `<li>我叫做 ${people[0].name}</li>`).join('')}
+  </ul>
+`
+console.log(newUl);
+// 範例有加入 jQuery 
+$('#app').html(newUl);
 </script> 
         </div>
       </div>
