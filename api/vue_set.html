@@ -88,6 +88,16 @@
         
         <div class="col-md-9 post">      
           <!-- 練習開始 -->
+          <!-- 
+            【章節在教怎麼看 console，所以要搭配圖片做筆記】 
+            Vue 是用 get, set 動態的綁定資料，如果沒有預先定義資料結構，就不會有 get,set，導致出錯。
+
+            解決方案:
+            1. 預先定義好資料結構 (在 data 中要把所有需要響應式的資料設定進去)
+            2. 使用 vm.$set(object, key, value) 動態添加新的響應式屬性
+            
+            參考: https://pjchender.blogspot.com/2017/05/vue-vue-reactivity.html
+          -->
           <h1 class="mt-0 text-muted">Vue 的資料與 Set</h1>
           
 <div class="alert alert-secondary">
@@ -122,20 +132,23 @@ var child = {
   template: '#row-component',
   data: function() {
     return {
+      // 在此因為資料結構沒有被預先定義，所以用一般方法新增物件屬性，會發現資料更新了，畫面卻沒有重新渲染。
       data: {}
     }
   },
   methods: {
     addData: function() {
-      this.data.item = {
-        name: this.item.name
-      }
-      console.log(this.data, this);
-
-      // this.$set(this.data, 'item', {
+      // 以下方法無法寫入
+      // this.data.item = {
       //   name: this.item.name
-      // });
+      // }
       // console.log(this.data, this);
+
+      // 解決方案: 用 set 來動態寫入
+      this.$set(this.data, 'item', {
+        name: this.item.name
+      });
+      console.log(this.data, this);
     }
   },
   mounted: function() {

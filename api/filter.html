@@ -102,18 +102,31 @@
       <tr is="row-component" v-for="(item, key) in data" :item="item" :key="key"></tr>
     </tbody>
   </table>
-  {{ data[1].cash }}
+  <!-- 外部元件 -->
+  {{ data[1].cash | currency | dollarSign}}
 </div>
 
 <script type="text/x-template" id="row-component">
   <tr>
     <td>{{ item.name }}</td>
-    <td>{{ item.cash }}</td>
-    <td>{{ item.icash }}</td>
+    <td>{{ item.cash | currency | dollarSign}}</td>
+    <!-- 
+      老師是說會「由前面往後傳遞」，item.icash 會先作為函式的參數 (n) 傳給 currency，接著
+      「item.icash | currency」 return 的結果再作為函式的參數 (n) 傳給 dollarSign。
+     -->
+    <td>{{ item.icash | currency | dollarSign}}</td>
   </tr>
 </script>
 
 <script>
+Vue.filter('dollarSign', function(n){
+  return `$ ${n}`;
+});
+Vue.filter('currency', function(n){
+  return n.toFixed(2).replace(/./g, function(c, i, a) {
+    return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+  });
+});
 var child = {
   props: ['item'],
   template: '#row-component',
@@ -122,6 +135,20 @@ var child = {
       data: {}
     }
   },
+  /* 
+    以下是局部註冊的方法，只有這個元件可以取得函式。所以要改成用全域註冊才能讓外部元件取用
+  */ 
+  // filters: {
+  //   dollarSign: function(n){
+  //     return `$ ${n}`;
+  //   },
+  //   currency: function(n) {
+  //     // 查詢關鍵字: 【javascript currency format】，套用別人的作法 (千分號)
+  //     return n.toFixed(2).replace(/./g, function(c, i, a) {
+  //       return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+  //     });
+  //   }
+  // },
   mounted: function() {
     console.log('Component:', this)
   }

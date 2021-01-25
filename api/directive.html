@@ -87,7 +87,10 @@
           </div>
         
         <div class="col-md-9 post">      
-          <!-- 練習開始 -->
+          <!-- 
+            練習開始
+            這個章節比較難，要重看影片
+          -->
           <h1 class="mt-0 text-muted">自定義指令</h1>
           
 <div class="alert alert-secondary">
@@ -97,13 +100,16 @@
 </div>
 
 <div id="app">
-  <input type="email" v-model="email" v-focus v-validator="{ className: 'form-control' }">
+  <!-- v-focus 為自定義的指令， --> 
+  <input type="email" v-model="email" v-focus v-validator="{ className: 'form-control' }" >
 </div>
 
 <script>
 // 官方文件 https://cn.vuejs.org/v2/guide/custom-directive.html
 Vue.directive('focus', {
+  // inserted 是 hook。 directive 有自己的生命周期
   inserted: function(el) {
+    // 聚焦元素
     el.focus()
   }
 })
@@ -120,8 +126,9 @@ Vue.directive('validator', {
     // 從當前 Model 取值
     var value = vnode.context[currentModel];
 
-    // Email validate
+    // Email validate 正規式
     var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    // 測試有沒有符合 email 格式
     if (!re.test(value)) {
       el.className = 'form-control is-invalid'
     } else {
@@ -136,6 +143,7 @@ Vue.directive('validator', {
         return o.name === 'model';
     }).expression;
     var value = vnode.context[currentModel];
+    console.log('currnetModel', currentModel, value);
 
     var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if (!re.test(value)) {
@@ -149,7 +157,7 @@ Vue.directive('validator', {
 var app = new Vue({
   el: '#app',
   data: {
-    email: 'aaa',
+    email: 'aaa@gmail.com',
   },
   mounted: function() {
     console.log('Vue init:', this)

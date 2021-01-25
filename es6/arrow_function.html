@@ -144,7 +144,7 @@
 // updateEasyCard(10, 50, 100, 50, 5, 1, 1, 1, 500);
 
 
-// # This 綁定的差異  (傳統 this = 函式的呼叫方式)
+// # This 綁定的差異  
 // 因為箭頭函式的 this 所綁定的對象比較複雜，建議在使用 Vue 的時候用傳統函式 -> 縮寫的方法來撰寫
 // var name = '全域阿婆'
 // var auntie = {
@@ -169,6 +169,10 @@
 // // auntie.callName();
 // auntie.callName2();
 
+/* 綁定的 this 不同  https://wcc723.github.io/javascript/2017/12/21/javascript-es6-arrow-function/
+    傳統函式：依呼叫的方法而定。
+    箭頭函式：綁定到其定義時所在的物件。
+*/
 
 // # 善用的方式
 // 請將內層的 console.log 能夠指向 auntie 這個物件

@@ -126,11 +126,8 @@
 </script>
 
 <script>
-// extend 是基礎建構的概念
-// var newExtend = Vue.extend()
-
-var childOne = {
-  props: ['item'],
+// extend 是基礎建構的概念，可以把重複的程式碼放在 extend，給其他部分使用;
+var newExtend = Vue.extend({
   data: function() {
     return {
       data: {},
@@ -151,29 +148,25 @@ var childOne = {
   mounted: function() {
     console.log('Extend:', this)
   }
+})
+
+// 加入 extends
+var childOne = {
+  props: ['item'],  
+  extends: newExtend,
 }
 
+// 加入 extends，並加入額外程式碼 (新加入的內容會與 extends 的內容並存，重複的內容則會覆寫 extends 預設)
 var childTwo = {
   props: ['item'],
   data: function() {
-    return {
-      data: {},
-      extendData: '這段文字是 extend 得到'
-    }
+    // 新內容 vs 重複的內容
+    return {childTwo: "元件 2", extendData: '這段文字是 元件 2 得到'}
   },
   template: '#row-component-two',
-  filters: {
-    dollarSign: function (n) {
-      return `$ ${n}`
-    },
-    currency: function(n) {
-      return n.toFixed(2).replace(/./g, function(c, i, a) {
-          return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-      });
-    }
-  },
+  extends: newExtend,
   mounted: function() {
-    console.log('Extend:', this)
+    console.log('childTwo');
   }
 }
 
