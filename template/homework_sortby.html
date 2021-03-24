@@ -119,16 +119,18 @@
     <thead>
       <tr>
         <th>品名</th>
-        <th class="click">價格 
-          <!-- isReverse 為反轉 className -->
-          <span class="icon isReverse">
+        <th class="click" @click="sortType = 'price'; isReverse = !isReverse">價格 
+          <span class="icon" :class="{'inverse' : isReverse}" v-if="sortType === 'price'">
             <i class=" fas fa-angle-up text-success"></i>
           </span>
         </th>
-        <th class="click">到期日 
+        <th class="click" @click="sortType = 'expiryDate'; isReverse = !isReverse">到期日
+          <span class="icon" :class="{'inverse' : isReverse}" v-if="sortType === 'expiryDate'">
+            <i class=" fas fa-angle-up text-success"></i>
+          </span>
         </th>
       </tr>
-      <tr v-for="item in data">
+      <tr v-for="item in sortData" :key="item.name">
         <td>{{ item.name }}</td>
         <td>{{ item.price }}</td>
         <td>{{ item.expiryDate }}</td>
@@ -153,6 +155,8 @@
 var app = new Vue({
   el: '#app',
   data: {
+    sortType: 'price',
+    isReverse: true,
     data: [
       {
         name: '巧呼呼蘇打水',
@@ -182,7 +186,21 @@ var app = new Vue({
     ],
   },
   // 請在此撰寫 JavaScript
-  computed: {}
+  computed: {
+    sortData() {
+      const vm = this;
+      let data = vm.data;
+      return data.sort((a, b) => {{ 
+        a = a[vm.sortType];
+        b = b[vm.sortType];
+        // 主要是根據 sorrDirection 的正負決定 sort 的排序方向 (sort 針對數字排序的結果只有「升冪」或是「降冪」兩種)
+        let sorrDirection = vm.isReverse ? 1 : -1;
+        // 以下兩種寫法都可以
+        // return (a === b ? 0 : a > b ? 1 : -1) * sorrDirection;
+        return (a - b) * sorrDirection;
+      }})
+    }
+  }
 });
 </script>
 
