@@ -163,6 +163,8 @@
 <script>
 // API 來源
 // https://opendata.epa.gov.tw/Data/Contents/AQI/
+// API 有問題，要修改一下名稱 (這種不會報錯的 Bug 真的很垃圾，一定要加上 catch)
+
 let cardPanel = {
   props: ['cardData', 'dataStatus'],
   template: '#cardPanel',
@@ -263,6 +265,8 @@ let app = new Vue({
         })
       }
       vm.data = response;
+    }).catch(function (error) {
+      console.log(error);
     });
   },
 });
