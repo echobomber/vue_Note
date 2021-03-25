@@ -152,7 +152,7 @@
 //   return (a === b ? 0 : a > b ? 1 : -1) * 正反排序數值
 // })
 
-var app = new Vue({
+let app = new Vue({
   el: '#app',
   data: {
     sortType: 'price',
@@ -194,10 +194,10 @@ var app = new Vue({
         a = a[vm.sortType];
         b = b[vm.sortType];
         // 主要是根據 sorrDirection 的正負決定 sort 的排序方向 (sort 針對數字排序的結果只有「升冪」或是「降冪」兩種)
-        let sorrDirection = vm.isReverse ? 1 : -1;
+        let sortDirection = vm.isReverse ? 1 : -1;
         // 以下兩種寫法都可以
-        // return (a === b ? 0 : a > b ? 1 : -1) * sorrDirection;
-        return (a - b) * sorrDirection;
+        // return (a === b ? 0 : a > b ? 1 : -1) * sortDirection;
+        return (a - b) * sortDirection;
       }})
     }
   }
